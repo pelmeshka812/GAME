@@ -23,41 +23,43 @@ right = False
 animCount = 0
 clock = pygame.time.Clock()
 run = True
-level_1 = ["|____|____|___|_______|__|___|", "____|____|___|"]
+level_up = ["|____|____|___|_______|__|___|", "____|____|___|"]
 
 
-def drawWindow(level_1):
+def draw_window():
     sc.blit(sc, (0, 0))
     global animCount
     pygame.draw.rect(sc, GREEN, (x, y, width, height))
     pygame.draw.line(sc, BLUE, [0, 300 + height], [500, 300 + height], 10)
     pygame.display.update()
     sc.fill(BLACK)
+
+
+def draw_barrier():# рисуем препятствия
     xR = 400
     yR = 300 + height - RECT_HEIGHT
-    for row in level_1:
-        for col in row:  # каждый символ
+    for row in level_up:
+        for col in row:
             if col == "|":
                 pygame.draw.rect(sc, RED, (xR, yR, RECT_WIDTH, RECT_HEIGHT))
 
-            xR += RECT_WIDTH  # блоки платформы ставятся на ширине блоков
+            xR += RECT_WIDTH
         xR = 0
 
 
-while run:
+while run: # основной цикл
     clock.tick(50)
 
     for i in pygame.event.get():
         if i.type == pygame.QUIT:
             run = False
 
-
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT] and x > 5:
         x -= speed
     if keys[pygame.K_RIGHT] and x < W - width - speed:
         x += speed
-    if not isJump:
+    if not isJump: #прыжок
         if keys[pygame.K_SPACE]:
             isJump = True
     else:
@@ -75,6 +77,6 @@ while run:
         isJump = True
 
     clock.tick(100)
-    drawWindow(level_1)
-
+    draw_window()
+    draw_barrier()
 pygame.quit()

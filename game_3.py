@@ -1,6 +1,5 @@
-from Barrier import *
 import pygame
-
+import random
 
 pygame.init()
 pygame.display.set_caption("Simple game")
@@ -41,28 +40,15 @@ def draw_window():
     pygame.display.update()
 
 
-def draw_barrier(x_helper, count_r):# рисуем препятствия
-    for h in range(count_r):
-        pygame.draw.rect(sc, RED, (x_helper, yR, RECT_WIDTH, RECT_HEIGHT))
-    x_helper -= 10
-    pygame.display.update()
-
-
-def barrier(x_helper):
+def barrier(x_move, x_fisrt_coord):
     for row in level_up:
         for col in row:
             if col == "|":
                 pf = pygame.Surface((RECT_WIDTH, RECT_HEIGHT))
                 pf.fill(RED)
-                sc.blit(pf, (x_helper, yR))
-            elif col == "_":
-                pf = pygame.Surface((10, RECT_HEIGHT))
-                pf.fill(BLACK)
-                sc.blit(pf, (x_helper, yR))
-            x_helper -= 10
+                sc.blit(pf, (x_fisrt_coord + x_move, yR))
 
-
-
+            x_fisrt_coord -= 15
 
 
 while run: # основной цикл
@@ -95,34 +81,13 @@ while run: # основной цикл
     clock.tick(20)
     sc.fill(BLACK)
 
-    if x_helper > 200:
-        x_helper -= 10
+    if x_helper > 0:
+        x_helper -= 15
     else:
-        x_helper = 490
+        x_helper = 500
 
-    barrier(x_helper)
+    barrier(x_helper, random.randint(490, 500))
     draw_window()
-
-
-    """"
-    while h < len(level_up[0]):
-        while x_helper > 0:
-            draw_barrier(x_helper)
-            x_helper -= 10
-            h += 1
-        countRect += 1
-
-    #while i < len(barriers):
-
-
-   #
-    #
-     #       if level_up[0][i] == "|":
-      #          draw_barrier(x_helper)
-       #     x_helper -= 10
-        #    i += 1
-"""""
-
 
 
 pygame.quit()
